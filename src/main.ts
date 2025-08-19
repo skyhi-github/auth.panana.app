@@ -1,13 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as path from 'path';
-import * as serveStatic from 'serve-static';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.use(serveStatic(path.join(__dirname, '..', 'public')));
-
+  app.use(cookieParser());
+    app.enableCors({
+    origin: 'http://localhost:3000',  // Explicitly set allowed origin
+    credentials: true,               // Enable credentials (cookies, etc.)
+  });
   await app.listen(4000);
 }
 
