@@ -278,7 +278,18 @@ body .loader_cogs__bottom div.bottom_hole {
                'Content-Type': 'application/json'
            },
            credentials: 'include'
-       })
+       }).then(response => {
+          if (response.redirected) {
+            // If a redirect was sent, the browser will handle it
+            window.location.href = response.url;
+          } else {
+            // Handle any other response type
+            return response.json();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
   }
 
 </script>

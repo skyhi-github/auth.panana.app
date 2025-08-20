@@ -10,7 +10,7 @@ export class AppController {
 
   @Get('')
   index(@Res() res: Response): void {
-    const filePath = path.join(__dirname, '..', 'public', 'index.html');
+    const filePath = path.join(__dirname, '..', 'public', 'home.html');
 
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
@@ -46,29 +46,29 @@ export class AppController {
       console.log('No cookies found');
     }
       res.cookie('myCookie', 'cookieValue', {
-      domain: 'http://localhost:4000', // Set the domain to your server's domain
+      domain: 'https://login.panana.app', // Set the domain to your server's domain
       httpOnly: false,    // Cookie is only accessible through the HTTP protocol
       secure: false,     // Set to 'true' if using HTTPS
       maxAge: 36000000,   // 1 hour
     });
-     res.redirect('http://localhost:4000/fly');
+     res.redirect('https://login.panana.app/fly');
   }
 
-    @Get('fly')
-    fly(@Req() request: Request, @Res() res: Response): void {
-    const filePath = path.join(__dirname, '..', 'public', 'fly.html');
+  @Get('fly')
+  fly(@Req() request: Request, @Res() res: Response): void {
+  const filePath = path.join(__dirname, '..', 'public', 'fly.html');
 
-    const userCookie = request.headers['cookie'];
+  const userCookie = request.headers['cookie'];
 
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        res.status(500).send('Error reading HTML file');
-        return;
-      }
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading HTML file');
+      return;
+    }
 
-      res.setHeader('Content-Type', 'text/html');
-      res.send(data);
-    });
+    res.setHeader('Content-Type', 'text/html');
+    res.send(data);
+  });
   }
   
 }
